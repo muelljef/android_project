@@ -16,5 +16,8 @@ public class TripActivity extends ActionBarActivity {
 
         TextView tripName = (TextView) findViewById(R.id.tripName);
         tripName.setText(intent.getStringExtra("tripName"));
+
+        TextView idView = (TextView) findViewById(R.id.idView);
+        idView.setText(intent.getStringExtra("id"));
     }
 }
