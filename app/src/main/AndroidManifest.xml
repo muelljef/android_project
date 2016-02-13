@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".TripsListActivity" />
-        <activity android:name=".TripActivity"></activity>
+        <activity android:name=".TripActivity" />
+        <activity android:name=".AddGeoLocationActivity"></activity>
     </application>
 
 </manifest>

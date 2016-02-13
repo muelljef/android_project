@@ -7,35 +7,26 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.jmueller.travellingturtle.TripActivity">
+    tools:context="com.example.jmueller.travellingturtle.AddGeoLocationActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Trip"
-        android:id="@+id/tripName"
+        android:text="Large Text"
+        android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="ID"
-        android:id="@+id/idView"
-        android:layout_below="@+id/tripName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="77dp" />
+        android:layout_marginTop="65dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See and Add Geolocation"
-        android:id="@+id/gotoGeo"
-        android:layout_alignParentBottom="true"
+        android:text="Add Geolocation"
+        android:id="@+id/addGeolocationButton"
+        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="23dp"
-        android:onClick="gotoGeo" />
+        android:layout_marginTop="112dp"
+        android:nestedScrollingEnabled="true"
+        android:onClick="addGeolocation" />
 </RelativeLayout>
