@@ -21,7 +21,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/emailText"
         android:layout_above="@+id/loginButton"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

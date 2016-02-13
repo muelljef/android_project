@@ -6,6 +6,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.http.HttpStatus;
 import org.json.JSONException;
@@ -22,17 +24,20 @@ public class LoginPageActivity extends ActionBarActivity {
 
     public void login(View view) {
 
-        DownloadTask task = new DownloadTask();
-        //task.execute("http://54.191.221.125/users");
-        task.execute("http://54.200.119.101/appUsers");
-        /*
-        //Get intent for TripsList so we can change activity pages
-        Intent intent = new Intent(getApplicationContext(), TripsListActivity.class);
-        //Passing data through with the intent to the page
-        intent.putExtra("username", "jeff@email.com");
-        //start the page
-        startActivity(intent);
-        */
+        EditText emailView = (EditText) findViewById(R.id.emailText);
+        String email = emailView.getText().toString().trim();
+
+        if (email.length() == 0) {
+            Toast.makeText(LoginPageActivity.this, "You did not enter a username/email", Toast.LENGTH_LONG).show();
+            return;
+        } else {
+            DownloadTask task = new DownloadTask();
+            //task.execute("http://54.191.221.125/users");
+            String url = "http://54.200.119.101/appUsers/";
+            url += email;
+            //task.execute("http://54.200.119.101/appUsers/jeff@email.com");
+            task.execute(url);
+        }
     }
 
     @Override
@@ -95,18 +100,26 @@ public class LoginPageActivity extends ActionBarActivity {
 
             try {
                 JSONObject jsonObject = new JSONObject(result);
+                if(jsonObject.has("error")) {
+                    Toast.makeText(LoginPageActivity.this, "Sorry user not found", Toast.LENGTH_LONG).show();
+                } else {
+                    String email = jsonObject.getString("email");
+                    String id = jsonObject.getString("_id");
 
-                String email = jsonObject.getString("email");
+                    Log.i("email", email);
+                    Log.i("id", id);
+
+                    //Get intent for TripsList so we can change activity pages
+                    Intent intent = new Intent(getApplicationContext(), TripsListActivity.class);
+                    //Passing data through with the intent to the page
+                    intent.putExtra("username", email);
+                    intent.putExtra("id", id);
+                    //start the page
+                    startActivity(intent);
+
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
-
-            //String email = jsonObject.getString("email");
-
-            if(result != null) {
-                Log.i("Website Content", result);
-            } else {
-                Log.i("error", "call didn't work");
             }
 
         }
