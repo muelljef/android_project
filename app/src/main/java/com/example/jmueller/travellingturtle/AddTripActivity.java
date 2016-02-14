@@ -9,14 +9,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
@@ -32,23 +35,23 @@ public class AddTripActivity extends ActionBarActivity {
     EditText blogEditText;
     String blog;
 
-    public void addTrip(View view) {
-        Log.i("id", id);
-        Log.i("username", username);
+    public void addTripButton(View view) {
 
         tripName = tripNameEditText.getText().toString().trim();
         rating = ratingEditText.getText().toString().trim();
         blog = blogEditText.getText().toString().trim();
 
-        String url = "http://54.200.119.101/appTrips/?createdBy=" + id;
+        String url = "http://54.200.119.101/appTrips?createdBy=" + id;
 
+        //references for checking edit text is empty and urlencoding of parameters
         //http://stackoverflow.com/questions/6290531/check-if-edittext-is-empty
+        //http://stackoverflow.com/questions/10786042/java-url-encoding-of-query-string-parameters
         if(tripName.matches("")) {
             Toast.makeText(AddTripActivity.this, "Trip Name is required", Toast.LENGTH_LONG).show();
             return;
         } else {
             try {
-                url = url + "name=" + URLEncoder.encode(tripName, "UTF-8");
+                url = url + "&name=" + URLEncoder.encode(tripName, "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -57,13 +60,24 @@ public class AddTripActivity extends ActionBarActivity {
         if(rating.matches("")) {
             Log.i("Rating", "no value");
         } else {
-            Log.i("rating", rating);
+            try {
+                url = url + "&rating=" + URLEncoder.encode(rating, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         if(blog.matches("")) {
             Log.i("blog", "no value");
         } else {
-            Log.i("blog", blog);
+            try {
+                url = url + "&blog=" + URLEncoder.encode(blog, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
+
+        DownloadTask addTripTask = new DownloadTask();
+        addTripTask.execute(url);
 
     }
 
@@ -79,6 +93,7 @@ public class AddTripActivity extends ActionBarActivity {
         Intent intent = getIntent();
         username = intent.getStringExtra("username");
         id = intent.getStringExtra("id");
+
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
@@ -90,17 +105,13 @@ public class AddTripActivity extends ActionBarActivity {
             String result = "";
             InputStream in = null;
 
-                /*
+            Log.i("Url", urls[0]);
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(urls[0]);
+
             try {
-                //reference following link for example code on HttpClient
-                //http://stackoverflow.com/questions/25782582/send-put-request-in-android-to-rest-api
-                HttpClient httpClient = new DefaultHttpClient();
-                //HttpPut httpPut = new HttpPut(urls[0]);
-
-                //httpPut.addHeader("Accept", "application/json");
-                //httpPut.addHeader("Content-type", "application/json");
-
-                HttpResponse httpResponse = httpClient.execute(httpPut);
+                HttpResponse httpResponse = httpClient.execute(httpPost);
 
                 in = httpResponse.getEntity().getContent();
 
@@ -117,15 +128,9 @@ public class AddTripActivity extends ActionBarActivity {
                 }
 
                 return result;
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ClientProtocolException e) {
-                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-                */
 
             return null;
         }
@@ -136,19 +141,17 @@ public class AddTripActivity extends ActionBarActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            /*
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(result);
                 if(jsonObject.has("error")) {
-                    Toast.makeText(AddGeoLocationActivity.this, "Sorry an error occurred", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddTripActivity.this, "Sorry an error occurred", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(AddGeoLocationActivity.this, "Trip updated successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddTripActivity.this, "Trip updated successfully", Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            */
         }
     }
 }

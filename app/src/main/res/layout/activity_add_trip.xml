@@ -7,8 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.jmueller.travellingturtle.AddTripActivity"
-    android:onClick="addTrip">
+    tools:context="com.example.jmueller.travellingturtle.AddTripActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,11 +78,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Trip"
-        android:id="@+id/addTripButton"
-        android:layout_marginBottom="65dp"
-        android:onClick="addTrip"
+        android:text="New Button"
+        android:id="@+id/button"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="47dp"
+        android:onClick="addTripButton" />
 
 </RelativeLayout>

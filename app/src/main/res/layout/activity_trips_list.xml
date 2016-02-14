@@ -19,8 +19,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/tripsView"
-        android:layout_toLeftOf="@+id/addTripButton"
-        android:layout_toStartOf="@+id/addTripButton" />
+        android:layout_toLeftOf="@+id/gotoAddTripButton"
+        android:layout_toStartOf="@+id/gotoAddTripButton" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -28,15 +28,15 @@
         android:id="@+id/tripsView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/addTripButton" />
+        android:layout_below="@+id/gotoAddTripButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Trip"
-        android:id="@+id/addTripButton"
+        android:text="Add Trip Page"
+        android:id="@+id/gotoAddTripButton"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="addTrip" />
+        android:onClick="gotoAddTrip" />
 </RelativeLayout>

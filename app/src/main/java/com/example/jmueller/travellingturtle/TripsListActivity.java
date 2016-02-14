@@ -35,7 +35,7 @@ public class TripsListActivity extends ActionBarActivity {
     String id;
 
 
-    public void addTrip(View view) {
+    public void gotoAddTrip(View view) {
         //Get intent for TripsList so we can change activity pages
         Intent i = new Intent(getApplicationContext(), AddTripActivity.class);
         //Passing data through with the intent to the page
@@ -81,6 +81,29 @@ public class TripsListActivity extends ActionBarActivity {
 
     }
 
+    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        arrayAdapter = new ArrayAdapter(TripsListActivity.this, android.R.layout.simple_list_item_1, trips);
+        tripsView.setAdapter(arrayAdapter);
+        tripsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(getApplicationContext(), TripActivity.class);
+                i.putExtra("tripName", trips.get(position));
+                i.putExtra("id", ids.get(position));
+                startActivity(i);
+            }
+        });
+
+        DownloadTask task = new DownloadTask();
+        String url = "http://54.200.119.101/appTrips/?createdById=" + id;
+        task.execute(url);
+    }
+    */
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -143,7 +166,6 @@ public class TripsListActivity extends ActionBarActivity {
                         JSONObject trip = jsonTrips.getJSONObject(i);
                         trips.add(trip.getString("name"));
                         ids.add(trip.getString("_id"));
-                        Log.i("json trip", trip.toString());
                     }
 
                     Log.i("name array", trips.toString());
