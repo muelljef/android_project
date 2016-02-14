@@ -75,35 +75,18 @@ public class TripsListActivity extends ActionBarActivity {
             }
         });
 
-        DownloadTask task = new DownloadTask();
-        String url = "http://54.200.119.101/appTrips/?createdById=" + id;
-        task.execute(url);
-
     }
 
-    /*
     @Override
     protected void onResume() {
         super.onResume();
 
-        arrayAdapter = new ArrayAdapter(TripsListActivity.this, android.R.layout.simple_list_item_1, trips);
-        tripsView.setAdapter(arrayAdapter);
-        tripsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent i = new Intent(getApplicationContext(), TripActivity.class);
-                i.putExtra("tripName", trips.get(position));
-                i.putExtra("id", ids.get(position));
-                startActivity(i);
-            }
-        });
+        trips.clear();
 
         DownloadTask task = new DownloadTask();
         String url = "http://54.200.119.101/appTrips/?createdById=" + id;
         task.execute(url);
     }
-    */
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
