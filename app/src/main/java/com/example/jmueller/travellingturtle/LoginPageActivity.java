@@ -32,10 +32,8 @@ public class LoginPageActivity extends ActionBarActivity {
             return;
         } else {
             DownloadTask task = new DownloadTask();
-            //task.execute("http://54.191.221.125/users");
             String url = "http://54.200.119.101/appUsers/";
             url += email;
-            //task.execute("http://54.200.119.101/appUsers/jeff@email.com");
             task.execute(url);
         }
     }
