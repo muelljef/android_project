@@ -56,7 +56,7 @@ public class AddGeoLocationActivity extends ActionBarActivity implements Locatio
             addLocationTask.execute(urlString);
         } else {
 
-            Log.i("error", "no location details");
+            Toast.makeText(AddGeoLocationActivity.this, "Error: no location details", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -195,6 +195,17 @@ public class AddGeoLocationActivity extends ActionBarActivity implements Locatio
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(result);
+                if(jsonObject.has("error")) {
+                    Toast.makeText(AddGeoLocationActivity.this, "Sorry an error occurred", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(AddGeoLocationActivity.this, "Trip updated successfully", Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
