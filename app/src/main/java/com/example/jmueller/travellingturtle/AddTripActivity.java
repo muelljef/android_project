@@ -55,7 +55,6 @@ public class AddTripActivity extends ActionBarActivity {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            Log.i("Trip Name Url", url);
         }
         if(rating.matches("")) {
             Log.i("Rating", "no value");
@@ -105,8 +104,6 @@ public class AddTripActivity extends ActionBarActivity {
             String result = "";
             InputStream in = null;
 
-            Log.i("Url", urls[0]);
-
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(urls[0]);
 
@@ -148,6 +145,9 @@ public class AddTripActivity extends ActionBarActivity {
                     Toast.makeText(AddTripActivity.this, "Sorry an error occurred", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(AddTripActivity.this, "Trip updated successfully", Toast.LENGTH_LONG).show();
+                    tripNameEditText.setText("");
+                    ratingEditText.setText("");
+                    blogEditText.setText("");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
