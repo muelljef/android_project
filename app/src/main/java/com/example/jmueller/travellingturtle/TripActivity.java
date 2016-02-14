@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,9 @@ public class TripActivity extends ActionBarActivity {
     String tripName;
     String id;
     Intent i;
+    TextView ratingView;
+    TextView blogView;
+    TextView locationView;
 
     public void gotoGeo(View view) {
         //start the page
@@ -37,14 +41,15 @@ public class TripActivity extends ActionBarActivity {
         setContentView(R.layout.activity_trip);
 
         Intent intent = getIntent();
+        tripName = intent.getStringExtra("tripName");
+        id = intent.getStringExtra("id");
+
+        ratingView = (TextView) findViewById(R.id.ratingView);
+        blogView = (TextView) findViewById(R.id.blogView);
+        locationView = (TextView) findViewById(R.id.locationView);
 
         TextView tripNameView = (TextView) findViewById(R.id.tripName);
-        tripNameView.setText(intent.getStringExtra("tripName"));
-        tripName = intent.getStringExtra("tripName");
-
-        TextView idView = (TextView) findViewById(R.id.idView);
-        idView.setText(intent.getStringExtra("id"));
-        id = intent.getStringExtra("id");
+        tripNameView.setText(tripName);
 
         //Get intent for TripsList so we can change activity pages
         i = new Intent(getApplicationContext(), AddGeoLocationActivity.class);
@@ -53,8 +58,18 @@ public class TripActivity extends ActionBarActivity {
         i.putExtra("id", id);
     }
 
-    //OLD BELOW
-    /*
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String url = "http://54.200.119.101/appTrips/";
+        url = url + id;
+
+        DownloadTask tripInfoTask = new DownloadTask();
+        tripInfoTask.execute(url);
+
+    }
+
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
         //get the data from the url the request
@@ -109,22 +124,34 @@ public class TripActivity extends ActionBarActivity {
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 if(jsonObject.has("error")) {
-                    Toast.makeText(TripActivity.this, "Sorry user not found", Toast.LENGTH_LONG).show();
+                    Toast.makeText(TripActivity.this, "Sorry something went wrong", Toast.LENGTH_LONG).show();
                 } else {
-                    String email = jsonObject.getString("email");
-                    String id = jsonObject.getString("_id");
+                    String rating = "";
+                    String blog = "";
+                    String locations = "";
 
-                    Log.i("email", email);
-                    Log.i("id", id);
+                    Log.i("json", jsonObject.toString());
 
-                    //Get intent for TripsList so we can change activity pages
-                    Intent intent = new Intent(getApplicationContext(), TripsListActivity.class);
-                    //Passing data through with the intent to the page
-                    intent.putExtra("username", email);
-                    intent.putExtra("id", id);
-                    //start the page
-                    startActivity(intent);
+                    if(jsonObject != null) {
+                        if(jsonObject.has("rating")){
+                            rating = jsonObject.getString("rating");
+                            Log.i("rating", rating);
+                        }
 
+                        if(jsonObject.has("blog")){
+                            blog = jsonObject.getString("blog");
+                            Log.i("blog", blog);
+                        }
+
+                        if(jsonObject.has("locations")) {
+                            locations = jsonObject.getString("locations");
+                            Log.i("locations", locations);
+                        }
+                    }
+
+                    ratingView.setText(rating);
+                    blogView.setText(blog);
+                    locationView.setText(locations);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -132,5 +159,5 @@ public class TripActivity extends ActionBarActivity {
 
         }
     }
-    */
+
 }
