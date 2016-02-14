@@ -104,9 +104,6 @@ public class LoginPageActivity extends ActionBarActivity {
                     String email = jsonObject.getString("email");
                     String id = jsonObject.getString("_id");
 
-                    Log.i("email", email);
-                    Log.i("id", id);
-
                     //Get intent for TripsList so we can change activity pages
                     Intent intent = new Intent(getApplicationContext(), TripsListActivity.class);
                     //Passing data through with the intent to the page

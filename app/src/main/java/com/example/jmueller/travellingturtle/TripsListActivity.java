@@ -31,6 +31,19 @@ public class TripsListActivity extends ActionBarActivity {
     ArrayAdapter arrayAdapter;
     ArrayList<String> trips;
     ArrayList<String> ids;
+    String username;
+    String id;
+
+
+    public void addTrip(View view) {
+        //Get intent for TripsList so we can change activity pages
+        Intent i = new Intent(getApplicationContext(), AddTripActivity.class);
+        //Passing data through with the intent to the page
+        i.putExtra("username", username);
+        i.putExtra("id", id);
+        //start the page
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +51,11 @@ public class TripsListActivity extends ActionBarActivity {
         setContentView(R.layout.activity_trips_list);
 
         Intent intent = getIntent();
+        username = intent.getStringExtra("username");
+        id = intent.getStringExtra("id");
 
-        TextView username = (TextView) findViewById(R.id.username);
-        username.setText(intent.getStringExtra("username"));
+        TextView usernameView = (TextView) findViewById(R.id.username);
+        usernameView.setText(username);
 
         tripsView = (ListView) findViewById(R.id.tripsView);
 
@@ -61,8 +76,7 @@ public class TripsListActivity extends ActionBarActivity {
         });
 
         DownloadTask task = new DownloadTask();
-        String url = "http://54.200.119.101/appTrips/?createdById=" + intent.getStringExtra("id");
-        Log.i("url", url);
+        String url = "http://54.200.119.101/appTrips/?createdById=" + id;
         task.execute(url);
 
     }
